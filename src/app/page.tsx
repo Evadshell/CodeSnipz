@@ -28,7 +28,8 @@ export default async function Home() {
           <form
             action={async () => {
               "use server";
-              await signIn(); //dont put anything in bracket so that every option can be shown
+              await signIn("", { redirectTo: "/dashboard" })
+              //dont put anything in bracket so that every option can be shown
             }}
           >
             <button type="submit">Signin</button>
