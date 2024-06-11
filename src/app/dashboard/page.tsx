@@ -1,18 +1,23 @@
-import { redirect } from 'next/navigation'
-import { auth } from "../auth"
-import { use, useEffect } from "react";
-export default async function Dashboard(){
-    const session = await auth();
-    const checkAuth =()=>{
-if(!session){
-redirect("/")
-}
-}
-checkAuth();
+import { redirect } from 'next/navigation';
+import { auth } from "../auth";
+import Navbar from './navbar';
 
-    return (<>
-    <h1>Dashboard
-        {session?.user?.id}
-    </h1>
-    </>)
+export default async function Dashboard() {
+    const session = await auth();
+
+   
+        if (!session) {
+            redirect("/");
+        }
+ 
+
+    if (!session || !session.user) {
+        return <div>Loading...</div>; // Or any other loading indicator or fallback UI
+    }
+
+    return (
+        <>
+            <Navbar user={session.user} />
+        </>
+    );
 }
