@@ -1,11 +1,4 @@
-// utils/detectLanguage.ts
-// import Prism from 'prismjs';
-// import 'prismjs/components/prism-javascript';
-// import 'prismjs/components/prism-python';
-// import 'prismjs/components/prism-ruby';
-// // Import other languages as needed
 
-// src/utils/detectLanguage.ts
 export function detectLanguage(code: string): string {
     // Implement a basic language detection logic
     if (/^\s*<\?php/.test(code)) {
