@@ -1,11 +1,11 @@
 "use client";
 import { Button } from "@/components/ui/button"; // Adjust the import based on your project's structure
-import { PlusIcon, TrashIcon } from "@heroicons/react/24/outline"; // H
+import { PlusIcon, TrashIcon } from "@heroicons/react/24/outline";
 import React, { useState } from "react";
 import Navbar from "./navbar";
 import MonacoEditor from "./monacoEditor";
-import { useChat } from '@ai-sdk/react';
-
+import axios from 'axios';
+import { Spinner } from "@/components/ui/spinner"; // Import a spinner component or create one
 interface Card {
   id: number;
   heading: string;
@@ -23,11 +23,9 @@ interface DashboardClientProps {
 }
 
 const DashboardClient: React.FC<DashboardClientProps> = ({ user }) => {
-  const { messages, input, handleInputChange, handleSubmit } = useChat();
-
   const [cards, setCards] = useState<Card[]>([]);
   const [nextId, setNextId] = useState(1);
-
+  const [loadingCardId, setLoadingCardId] = useState<number | null>(null);
   const handleCreatePath = () => {
     setCards([
       ...cards,
@@ -42,40 +40,20 @@ const DashboardClient: React.FC<DashboardClientProps> = ({ user }) => {
 
   const handleExplainCode = async (card: Card) => {
     try {
-      const response = await fetch('/api/explain-code', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ code: card.code }),
-      });
-      const data = await response.json();
-      setCards(cards.map(c => c.id === card.id ? { ...c, explanation: data.explanation } : c));
+      "use server";
+      const response = await axios.post('/api/explaincode', { code : card.code });
+
+      setCards(cards.map(c => c.id === card.id ? { ...c, explanation: response.data.explanation } : c));
     } catch (error) {
       console.error('Error explaining code:', error);
+    }finally {
+      setLoadingCardId(null);
     }
   };
 
   return (
     <>
       <Navbar user={user} onCreatePath={handleCreatePath} />
-      <div className="flex flex-col w-full max-w-md py-24 mx-auto stretch">
-        {messages.map(m => (
-          <div key={m.id} className="whitespace-pre-wrap">
-            {m.role === 'user' ? 'User: ' : 'AI: '}
-            {m.content}
-          </div>
-        ))}
-
-        <form onSubmit={handleSubmit}>
-          <input
-            className="fixed bottom-0 w-full max-w-md p-2 mb-8 border border-gray-300 rounded shadow-xl"
-            value={input}
-            placeholder="Say something..."
-            onChange={handleInputChange}
-          />
-        </form>
-      </div>
       <div className="p-8">
         <h1 className="text-2xl font-bold mb-4">Dashboard</h1>
         <p className="mb-6">Manage your code snippets and explanations easily.</p>
@@ -116,19 +94,20 @@ const DashboardClient: React.FC<DashboardClientProps> = ({ user }) => {
             </div>
             <div className="mb-2">
               <label htmlFor={`explanation-${card.id}`} className="block font-semibold">Explanation</label>
-              <textarea
-                id={`explanation-${card.id}`}
-                className="w-full border rounded p-2"
-                rows={3}
-                value={card.explanation}
-                readOnly
-              />
+              <div className="w-full border rounded p-2 bg-gray-100 text-gray-700">
+                {card.explanation ? (
+                  <pre className="whitespace-pre-wrap">{card.explanation}</pre>
+                ) : (
+                  <span className="italic text-gray-500">Explanation will appear here...</span>
+                )}
+              </div>
             </div>
             <Button
               onClick={() => handleExplainCode(card)}
               className="bg-blue-500 text-white px-4 py-2 rounded-md"
+              disabled={loadingCardId === card.id}
             >
-              Explain Code
+              {loadingCardId === card.id ? <Spinner /> : "Explain Code"}
             </Button>
           </div>
         ))}
