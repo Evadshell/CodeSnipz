@@ -2,6 +2,7 @@
 import { redirect } from 'next/navigation';
 import { auth } from "../auth";
 import DashboardClient from './dashboardClient';
+import Navbar from './navbar';
 
 export default async function Dashboard() {
     const session = await auth();
@@ -11,5 +12,10 @@ export default async function Dashboard() {
         return null;
     }
 
-    return <DashboardClient user={session.user} />;
+    return (
+    <>
+    <Navbar user={session?.user} />
+    <DashboardClient user={session?.user} />;
+    
+    </>);
 }

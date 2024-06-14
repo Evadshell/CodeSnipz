@@ -1,18 +1,4 @@
 
-// import NextAuth from "next-auth"
-// import GitHub from "next-auth/providers/github"
-// import GoogleProvider from "next-auth/providers/google";
-// import { MongoDBAdapter } from "@auth/mongodb-adapter"
-// import clientPromise from "./lib/db"
-// export const { handlers, signIn, signOut, auth } = NextAuth({
-//   providers: [GitHub,GoogleProvider],adapter: MongoDBAdapter(clientPromise),callbacks: {
-//     async session({ session, user }) {
-//       session.userId = user.id;
-//       return session;
-//     },
-//   },
-//   debug: true, 
-// })
 import NextAuth from "next-auth";
 import GitHubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
