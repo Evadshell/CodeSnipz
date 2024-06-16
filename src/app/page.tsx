@@ -7,7 +7,7 @@ export default async function Home() {
   const session = await auth();
   console.log(session?.user);
   return (
-    <>
+    <div  >
     <LandingPage />
       {session?.user ? (
         <>
@@ -41,6 +41,6 @@ export default async function Home() {
           </form>
         </>
       )}
-    </>
+    </div>
   );
 }

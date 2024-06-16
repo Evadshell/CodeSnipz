@@ -1,13 +1,10 @@
 "use client";
 import { Button } from "@/components/ui/button"; // Adjust the import based on your project's structure
 import { PlusIcon, TrashIcon } from "@heroicons/react/24/outline";
-import React, { useState } from "react";
-import Navbar from "./navbar";
+import React, { useEffect, useState } from "react";
 import MonacoEditor from "./monacoEditor";
 import axios from "axios";
 import Spinner from "@/components/ui/spinner";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import SaveCodeSnips from "./save-code-snippets/SaveCodeSnips";
 interface Card {
   id: number;
   heading: string;
@@ -15,16 +12,47 @@ interface Card {
   explanation: string;
 }
 
-interface User {
-  image: string;
-  name: string;
-}
+// interface User {
+//   image: string;
+//   name: string;
+// }
 
-interface DashboardClientProps {
-  user: User;
-}
+// interface DashboardClientProps {
+//   user: User;
+// }
 
-const DashboardClient: React.FC<DashboardClientProps> = ({ user }) => {
+const DashboardClient: React.FC  = ({ user }) => {
+  const handleSaveCard = async (card: Card) => {
+    try {
+      console.log(user.id,card.heading,card.code)
+      await axios.post("/api/snippets/save", {
+        userId: user.id,
+        heading: card.heading,
+        code: card.code,
+        explanation: card.explanation,
+      });
+      alert('Code snippet saved successfully!');
+    } catch (error) {
+      console.error("Error saving code snippet:", error);
+    }
+  };
+  useEffect(() => {
+    const fetchSnippets = async () => {
+      try {
+        const response = await axios.get(`/api/snippets?userId=${user.id}`);
+        setCards(response.data.map((snippet: any, index: number) => ({
+          id: index + 1,
+          heading: snippet.heading,
+          code: snippet.code,
+          explanation: snippet.explanation,
+        })));
+        setNextId(response.data.length + 1);
+      } catch (error) {
+        console.error('Error fetching code snippets:', error);
+      }
+    };
+    fetchSnippets();
+  }, [user.id]);
   const [cards, setCards] = useState<Card[]>([]);
   const [nextId, setNextId] = useState(1);
   const [loadingCardId, setLoadingCardId] = useState<number | null>(null);
@@ -63,7 +91,6 @@ const DashboardClient: React.FC<DashboardClientProps> = ({ user }) => {
 
   return (
     <>
-      {/* <Navbar user={user}  />  */}
       <div className="ml-24 p-8">
         <h1 className="text-2xl font-bold mb-4">Dashboard</h1>
         <p className="mb-6">
@@ -138,6 +165,12 @@ const DashboardClient: React.FC<DashboardClientProps> = ({ user }) => {
             >
               {loadingCardId === card.id ? <Spinner /> : "Explain Code"}
             </Button>
+            <Button
+                onClick={() => handleSaveCard(card)}
+                className="bg-green-500 text-white px-4 py-2 rounded-md"
+              >
+                Save
+              </Button>
           </div>
         ))}
         <Button
