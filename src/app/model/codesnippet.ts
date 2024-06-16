@@ -29,3 +29,9 @@ export async function deleteCodeSnippet(snippetId: string): Promise<void> {
   const codeSnippets = db.collection('Codesnip');
   await codeSnippets.deleteOne({ _id: new ObjectId(snippetId) });
 }
+export async function getSnippetById(snippetId: string): Promise<CodeSnippet | null> {
+  const client = await clientPromise;
+  const db = client.db('CodeSnip');
+  const codeSnippets = db.collection('Codesnip');
+  return codeSnippets.findOne({ _id: new ObjectId(snippetId) });
+}

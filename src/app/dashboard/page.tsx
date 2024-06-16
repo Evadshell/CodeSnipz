@@ -1,7 +1,6 @@
 // src/app/dashboard/page.tsx
 import { redirect } from 'next/navigation';
 import { auth } from "../auth";
-import DashboardClient from './dashboardClient';
 import Navbar from './navbar';
 import {
     Tabs,
@@ -9,6 +8,8 @@ import {
     TabsList,
     TabsTrigger,
   } from "@/components/ui/tabs"
+import SnippetHistory from './snippet-history/SnippetHistory';
+import SaveCodeSnips from './save-code-snippets/SaveCodeSnips';
    
 export default async function Dashboard() {
     const session = await auth();
@@ -47,13 +48,13 @@ export default async function Dashboard() {
                         </TabsTrigger>
                     </TabsList>
                     <TabsContent value="save-code-snip" className="w-full bg-white p-6 rounded-lg shadow-md">
-                        <DashboardClient user={session?.user} />
+                        <SaveCodeSnips user={session?.user} />
                     </TabsContent>
                     <TabsContent value="password" className="w-full bg-white p-6 rounded-lg shadow-md">
                         Change your password here.
                     </TabsContent>
                     <TabsContent value="history" className="w-full bg-white p-6 rounded-lg shadow-md">
-                       History
+                      <SnippetHistory  user={session?.user} />
                     </TabsContent>
                 </Tabs>
             </div>
