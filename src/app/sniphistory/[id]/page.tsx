@@ -5,11 +5,26 @@ import axios from 'axios';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { materialDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
-
-export default   function SnippetDetails  (){
+import { Button } from "@/components/ui/button";
+import { FiCopy } from 'react-icons/fi';
+export default function SnippetDetails() {
   const router = useRouter();
   const { id } = useParams();
   const [snippet, setSnippet] = useState(null);
+  const [explanation,Setexplanation] = useState();
+ const handleExplainCode = async (card: Card) => {
+    try {
+      ("use server");
+      const response = await axios.post("/api/explaincode", {
+        code: card.code,
+      });
+console.log(response.data);
+Setexplanation(response.data.explanation);
+    } catch (error) {
+      console.error("Error explaining code:", error);
+    } finally {
+    }
+  };
 
   useEffect(() => {
     if (id) {
@@ -26,24 +41,62 @@ export default   function SnippetDetails  (){
     }
   }, [id]);
 
+  const copyToClipboard = (code: string) => {
+    navigator.clipboard.writeText(code).then(() => {
+      alert('Code copied to clipboard!');
+    }).catch(err => {
+      console.error('Error copying text: ', err);
+    });
+  };
+
   if (!snippet) {
     return <div>Loading...</div>;
   }
 
   return (
-    <div style={{ padding: '20px' }}>
-      <Card>
-        <CardHeader>
-          <CardTitle>{snippet?.heading}</CardTitle>
+    <div className="max-w-4xl mx-auto mt-10 p-5 bg-gray-50 rounded-lg shadow-lg">
+      <Card className="relative">
+        <CardHeader className="flex justify-between items-center">
+          <CardTitle className="text-xl font-bold">{snippet?.heading}</CardTitle>
         </CardHeader>
-        <CardContent>
-          <SyntaxHighlighter language="javascript" style={materialDark}>
-            {snippet.code}
-          </SyntaxHighlighter>
-          <p>{snippet.explanation}</p>
+        <CardContent className="relative">
+          <Button
+            size="sm"
+            className="absolute top-2 right-2 z-10 flex items-center bg-gray-800 text-white hover:bg-gray-700"
+            onClick={() => copyToClipboard(snippet.code)}
+          >
+            <FiCopy className="mr-1" /> Copy
+          </Button>
+          <div className="mb-4 rounded-md overflow-hidden">
+            <SyntaxHighlighter language="javascript" style={materialDark} className="p-3 rounded-md">
+              {snippet.code}
+            </SyntaxHighlighter>
+          </div>
+          <p className="text-md">{snippet.explanation}</p>
         </CardContent>
+         <div className="mb-2">
+              <label
+                htmlFor={`explanation-${snippet.id}`}
+                className="block font-semibold"
+              >
+                Explanation
+              </label>
+              <div className="w-full border rounded p-2 bg-gray-100 text-gray-700">
+                {explanation? (
+                  <pre className="whitespace-pre-wrap">{explanation}</pre>
+                ) : (
+                  <span className="italic text-gray-500">
+                    Explanation will appear here...
+                  </span>
+                )}
+              </div>
+            </div>
+            <Button
+              onClick={() => handleExplainCode(snippet)}
+              className="bg-blue-500 text-white px-4 py-2 rounded-md"
+            > Explain Code
+            </Button>
       </Card>
     </div>
   );
 }
- 
