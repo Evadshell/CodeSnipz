@@ -30,10 +30,7 @@ export default function RootLayout({
           fontSans.variable
         )}
       >
-        <ChakraProvider>
-
-        {children}
-        </ChakraProvider>
+        <ChakraProvider>{children}</ChakraProvider>
       </body>
     </html>
   );
