@@ -11,21 +11,20 @@ export default function SnippetDetails() {
   const router = useRouter();
   const { id } = useParams();
   const [snippet, setSnippet] = useState(null);
-  const [explanation,Setexplanation] = useState();
- const handleExplainCode = async (card: Card) => {
+  const [explanation,Setexplanation] = useState('');
+  const [context, setContext] = useState('');
+
+  const handleExplainCode = async () => {
     try {
-      ("use server");
       const response = await axios.post("/api/explaincode", {
-        code: card.code,
+        code: snippet?.code,
+        context: context,
       });
-console.log(response.data);
-Setexplanation(response.data.explanation);
+      Setexplanation(response.data.explanation);
     } catch (error) {
       console.error("Error explaining code:", error);
-    } finally {
     }
   };
-
   useEffect(() => {
     if (id) {
       const fetchSnippet = async () => {
@@ -73,29 +72,33 @@ Setexplanation(response.data.explanation);
             </SyntaxHighlighter>
           </div>
           <p className="text-md">{snippet.explanation}</p>
-        </CardContent>
-         <div className="mb-2">
-              <label
-                htmlFor={`explanation-${snippet.id}`}
-                className="block font-semibold"
-              >
-                Explanation
-              </label>
+          <div className="mt-4">
+            <label htmlFor="context" className="block font-semibold mb-2">Provide Context</label>
+            <textarea
+              id="context"
+              value={context}
+              onChange={(e) => setContext(e.target.value)}
+              className="w-full border rounded p-2 mb-4"
+              placeholder="Explain what part you don't understand or need more details on..."
+            />
+            <Button
+              onClick={handleExplainCode}
+              className="bg-blue-500 text-white px-4 py-2 rounded-md w-full"
+            >
+              Explain Code
+            </Button>
+            <div className="mt-4">
+              <label className="block font-semibold mb-2">Explanation</label>
               <div className="w-full border rounded p-2 bg-gray-100 text-gray-700">
-                {explanation? (
+                {explanation ? (
                   <pre className="whitespace-pre-wrap">{explanation}</pre>
                 ) : (
-                  <span className="italic text-gray-500">
-                    Explanation will appear here...
-                  </span>
+                  <span className="italic text-gray-500">Explanation will appear here...</span>
                 )}
               </div>
             </div>
-            <Button
-              onClick={() => handleExplainCode(snippet)}
-              className="bg-blue-500 text-white px-4 py-2 rounded-md"
-            > Explain Code
-            </Button>
+          </div>
+        </CardContent>
       </Card>
     </div>
   );

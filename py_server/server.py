@@ -12,6 +12,7 @@ os.environ["OPENAI_API_KEY"] = 'gsk_TKFYoKwUTyPLTNUKsyw2WGdyb3FYWujUEnBPKX2m4sGb
 def explain_code():
     data = request.json
     code = data.get('code')
+    context = data.get('context', '')
 
     if not code:
         return jsonify({'error': 'Code is required'}), 400
@@ -19,16 +20,16 @@ def explain_code():
     try:
         explainer = Agent(
             role="code briefer and enhanced",
-            goal="Provide a brief explanation of the given code snippet so that the user understands it in one go and then return a more enhanced version of the code.",
-            backstory="You are an AI assistant whose job is to explain code and enhance it.",
+            goal="Provide a brief explanation of the given code snippet so that the user understands it in one go.",
+            backstory="You are an AI assistant whose job is to explain code",
             verbose=True,
             allow_delegation=False,
         )
         
         explain_code_task = Task(
-            description=f"Explain and enhance the following code: '{code}'",
+            description=f"Explain the following code: '{code}' with the  Context: '{context}' where the user is facing problem in understanding the code.",
             agent=explainer,
-            expected_output="A brief explanation of the code snippet and enhanced version."
+            expected_output="A brief explanation of the code snippet to make user understand the problem with context."
         )
 
         crew = Crew(
