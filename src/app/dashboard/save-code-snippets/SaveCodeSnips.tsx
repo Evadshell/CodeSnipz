@@ -4,7 +4,6 @@ import { PlusIcon, TrashIcon } from "@heroicons/react/24/outline";
 import React, { useEffect, useState } from "react";
 import MonacoEditor from "../monacoEditor";
 import axios from "axios";
-import Spinner from "@/components/ui/spinner";
 interface Card {
   id: number;
   heading: string;
