@@ -4,16 +4,27 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useRouter } from 'next/navigation'
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
+interface Snippet {
+  id: string;
+  heading: string;
+}
 
-const SnippetHistory:React.FC<{ user?: any }> =  ({user}) => {
+interface User {
+  id: string;
+  name: string;
+  email: string;
+  image: string | null;
+}
+
+
+const SnippetHistory: React.FC<{ user?: User }> = ({ user }) => {
 // const session =  auth();
-const [snips,Setsnips] = useState([]);
-useEffect(() => {
+const [snips, setSnips] = useState<Snippet[]>([]);useEffect(() => {
     const fetchSnippets =  async () => {
       try {
         const response = await axios.get(`/api/snippets/getsnips?userId=${user?.id}`);
 console.log(response.data);
-        Setsnips(response.data.map((snippet: any, index: number) => ({
+setSnips(response.data.map((snippet: any, index: number) => ({
           id: snippet._id,
           heading: snippet.heading,
         })));

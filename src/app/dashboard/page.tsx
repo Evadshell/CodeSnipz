@@ -65,7 +65,7 @@ export default async function Dashboard() {
             value="history"
             className="w-full bg-white p-6 rounded-lg shadow-md"
           >
-            <SnippetHistory user={session?.user} />
+            <SnippetHistory user={user} />
           </TabsContent>
         </Tabs>
       </div>
