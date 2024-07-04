@@ -14,10 +14,15 @@ export default async function Dashboard() {
     redirect("/");
     return null;
   }
+  const user = session.user as { 
+    name: string; 
+    email: string; 
+    image: string; // Ensure that image is not undefined or handle it appropriately 
+  };
 
   return (
     <>
-      <Navbar user={session?.user} />
+      <Navbar user={user} />
       {/* <DashboardClient user={session?.user} />; */}
 
       <div className="flex-1 flex flex-col items-center justify-center p-8 ">

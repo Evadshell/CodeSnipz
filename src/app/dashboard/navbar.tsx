@@ -16,8 +16,9 @@ import { signOut } from "../auth";
 import SaveCodeSnips from "./save-code-snippets/SaveCodeSnips";
 import Image from "next/image";
 interface User {
-  image: string;
   name: string;
+  email: string;
+  image: string | null | undefined; // Adjusted type
 }
 
 interface NavbarProps {
@@ -29,7 +30,7 @@ export default function Navbar({ user }: NavbarProps) {
     <div className="fixed left-4 top-4 h-[calc(100%-32px)] w-16 bg-gray-900 text-white shadow-lg rounded-lg flex flex-col items-center py-4 space-y-6">
       <div className="flex flex-col items-center space-y-2">
         <Image
-          src={user.image}
+          src={user?.image}
           alt="User Profile"
           width={40}
           height={40}
