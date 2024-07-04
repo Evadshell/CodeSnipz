@@ -1,6 +1,5 @@
 import clientPromise from '../lib/db';
-import { ObjectId } from 'mongodb';
-
+import { ObjectId, WithId, Document } from 'mongodb';
 export interface CodeSnippet {
   _id?: ObjectId;
   userId: string;
@@ -13,8 +12,16 @@ export async function getCodeSnippets(userId: string): Promise<CodeSnippet[]> {
   const client = await clientPromise;
   const db = client.db('CodeSnip');
   const codeSnippets = db.collection('Codesnip');
-  return codeSnippets.find({ userId }).toArray();
-}
+  const snippets = await codeSnippets.find({ userId }).toArray();
+  
+  // Map the documents to match the CodeSnippet type
+  return snippets.map((snippet: WithId<Document>) => ({
+    _id: snippet._id,
+    userId: snippet.userId,
+    heading: snippet.heading,
+    code: snippet.code,
+    explanation: snippet.explanation,
+  })) as CodeSnippet[];}
 
 export async function saveCodeSnippet(snippet: CodeSnippet): Promise<void> {
   const client = await clientPromise;
@@ -33,5 +40,4 @@ export async function getSnippetById(snippetId: string): Promise<CodeSnippet | n
   const client = await clientPromise;
   const db = client.db('CodeSnip');
   const codeSnippets = db.collection('Codesnip');
-  return codeSnippets.findOne({ _id: new ObjectId(snippetId) });
-}
+  return codeSnippets.findOne({ _id: new ObjectId(snippetId) }) as Promise<CodeSnippet | null>;}
