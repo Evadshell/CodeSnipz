@@ -7,10 +7,17 @@ import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { materialDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { Button } from "@/components/ui/button";
 import { FiCopy } from 'react-icons/fi';
+interface Snippet {
+  id: string;
+  heading: string;
+  code : string;
+  explanation: string;  
+
+}
 export default function SnippetDetails() {
   const router = useRouter();
   const { id } = useParams();
-  const [snippet, setSnippet] = useState(null);
+  const [snippet, setSnippet] =  useState<Snippet>();
   const [explanation,Setexplanation] = useState('');
   const [context, setContext] = useState('');
 
