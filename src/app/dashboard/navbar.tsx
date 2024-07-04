@@ -18,7 +18,7 @@ import Image from "next/image";
 interface User {
   name: string;
   email: string;
-  image: string | null | undefined; // Adjusted type
+  image: string ; // Adjusted type
 }
 
 interface NavbarProps {
