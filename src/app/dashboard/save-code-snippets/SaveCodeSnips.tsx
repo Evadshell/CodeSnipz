@@ -11,16 +11,17 @@ interface Card {
   explanation: string;
 }
 
-// interface User {
-//   image: string;
-//   name: string;
-// }
+interface User {
+  id: string;
+  image: string | null | undefined;
+  name: string;
+}
 
-// interface DashboardClientProps {
-//   user: User;
-// }
+interface SaveCodeSnipsProps {
+  user: User;
+}
 
-const SaveCodeSnips: React.FC  = ({ user }) => {
+const SaveCodeSnips: React.FC<SaveCodeSnipsProps> = ({ user }) => {
   const handleSaveCard = async (card: Card) => {
     try {
       console.log(user.id,card.heading,card.code)
