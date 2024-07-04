@@ -13,8 +13,9 @@ interface Card {
 
 interface User {
   id: string;
-  image: string | null | undefined;
   name: string;
+  email: string;
+  image: string | null;
 }
 
 interface SaveCodeSnipsProps {

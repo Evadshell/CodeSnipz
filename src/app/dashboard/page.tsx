@@ -15,6 +15,8 @@ export default async function Dashboard() {
     return null;
   }
   const user = session.user as { 
+    id: string;
+
     name: string; 
     email: string; 
     image: string; // Ensure that image is not undefined or handle it appropriately 
@@ -51,7 +53,7 @@ export default async function Dashboard() {
             value="save-code-snip"
             className="w-full bg-white p-6 rounded-lg shadow-md"
           >
-            <SaveCodeSnips user={session?.user} />
+            <SaveCodeSnips user={user} />
           </TabsContent>
           <TabsContent
             value="enhance-code"
