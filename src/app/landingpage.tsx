@@ -23,12 +23,12 @@ export default function LandingPage() {
             Keep track of your learning in your hands now
           </CardDescription>
         </CardHeader>
-        <CardContent>
+        {/* <CardContent>
           <p>Card Content</p>
         </CardContent>
         <CardFooter>
           <p>Card Footer</p>
-        </CardFooter>
+        </CardFooter> */}
       </Card>
     </div>
   );
