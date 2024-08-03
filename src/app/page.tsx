@@ -9,7 +9,7 @@ export default async function Home() {
   return (
     <div  >
     <LandingPage />
-      {session?.user ? (
+      {/* {session?.user ? (
         <>
           <h1>{session?.user?.name}</h1>
           <Image
@@ -40,7 +40,7 @@ export default async function Home() {
             <button type="submit">Signin</button>
           </form>
         </>
-      )}
+      )} */}
     </div>
   );
 }

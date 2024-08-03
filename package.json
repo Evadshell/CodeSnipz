@@ -21,6 +21,7 @@
     "@radix-ui/react-slot": "^1.0.2",
     "@radix-ui/react-tabs": "^1.0.4",
     "@radix-ui/react-tooltip": "^1.0.7",
+    "@react-spring/parallax": "^9.7.4",
     "@uiw/react-codemirror": "^4.22.2",
     "ai": "^3.1.33",
     "auth": "^1.0.2",

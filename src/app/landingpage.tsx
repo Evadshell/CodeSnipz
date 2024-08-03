@@ -1,3 +1,4 @@
+
 import React from "react";
 import {
   Card,
@@ -9,10 +10,12 @@ import {
 } from "@/components/ui/card";
 import SignInButton from "./signButton";
 // import SignInButton from "@/components/SignInButton";
-
+import {Parallax , ParallaxLayer} from '@react-spring/parallax';
+import ParallaxComponenet from "./parallax";
 export default function LandingPage() {
   return (
-    <div className="relative min-h-screen flex flex-col justify-center items-center bg-gray-100">
+    <>
+    {/* <div className="relative min-h-screen flex flex-col justify-center items-center bg-gray-100">
       <div className="absolute top-4 right-4">
         <SignInButton />
       </div>
@@ -23,13 +26,10 @@ export default function LandingPage() {
             Keep track of your learning in your hands now
           </CardDescription>
         </CardHeader>
-        {/* <CardContent>
-          <p>Card Content</p>
-        </CardContent>
-        <CardFooter>
-          <p>Card Footer</p>
-        </CardFooter> */}
       </Card>
-    </div>
+    
+    </div> */}
+   <ParallaxComponenet />
+    </>
   );
 }
