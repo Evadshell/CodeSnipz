@@ -1,10 +1,9 @@
 "use client";
 import { useState } from "react";
 import axios from "axios";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import MonacoEditor from "../monacoEditor";
-import { FiCopy } from "react-icons/fi";
 import { PlusIcon, TrashIcon } from "@heroicons/react/24/outline";
 
 interface Card {

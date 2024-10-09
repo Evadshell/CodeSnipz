@@ -1,8 +1,6 @@
 import React from "react";
 // import Si
 import { Button } from "@/components/ui/button"; // Adjust the import based on your project's structure
-import { PlusIcon } from "@heroicons/react/24/outline"; // Heroicons for the plus icon
-import UserInfo from "./usernav"; // Adjust the import based on your project's structure
 import {
   Tooltip,
   TooltipContent,

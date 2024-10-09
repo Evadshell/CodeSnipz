@@ -8,8 +8,8 @@ export default async function Home() {
   console.log(session?.user);
   return (
     <div  >
-    <LandingPage />
-      {/* {session?.user ? (
+    {/* <LandingPage /> */}
+      {session?.user ? (
         <>
           <h1>{session?.user?.name}</h1>
           <Image
@@ -40,7 +40,7 @@ export default async function Home() {
             <button type="submit">Signin</button>
           </form>
         </>
-      )} */}
+      )}
     </div>
   );
 }
