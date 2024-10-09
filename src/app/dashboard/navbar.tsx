@@ -1,6 +1,5 @@
 import React from "react";
-// import Si
-import { Button } from "@/components/ui/button"; // Adjust the import based on your project's structure
+ import { Button } from "@/components/ui/button";  
 import {
   Tooltip,
   TooltipContent,
@@ -8,7 +7,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 
-import { FiLogOut } from "react-icons/fi"; // FiLogOut is the sign out icon from react-icons/fi
+import { FiLogOut } from "react-icons/fi";  
 import { signOut } from "../auth";
 
 import SaveCodeSnips from "./save-code-snippets/SaveCodeSnips";
@@ -16,7 +15,7 @@ import Image from "next/image";
 interface User {
   name: string;
   email: string;
-  image: string ; // Adjusted type
+  image: string ;  
 }
 
 interface NavbarProps {
