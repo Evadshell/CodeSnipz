@@ -27,6 +27,7 @@ export async function saveCodeSnippet(snippet: CodeSnippet): Promise<void> {
   const client = await clientPromise;
   const db = client.db('CodeSnip');
   const codeSnippets = db.collection('Codesnip');
+  console.log(snippet);
   await codeSnippets.insertOne(snippet);
 }
 
