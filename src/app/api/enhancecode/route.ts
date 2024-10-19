@@ -4,7 +4,8 @@ import axios from 'axios';
 export async function POST(req: NextRequest) {
   const body = await req.json();
   const { code, enhancement_request } = body;
-
+console.log(code);
+console.log(enhancement_request);
   if (!code) {
     return NextResponse.json({ error: 'Code is required' }, { status: 400 });
   }
