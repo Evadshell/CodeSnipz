@@ -16,8 +16,6 @@ console.log(enhancement_request);
 
   try {
     const response = await axios.post('http://localhost:5000/enhance-code', { code, enhancement_request });
-
-    console.log(response);
     return NextResponse.json(response.data, { status: 200 });
   } catch (error) {
     console.error('Error:', error);
