@@ -15,7 +15,7 @@ import ParallaxComponenet from "./parallax";
 export default function LandingPage() {
   return (
     <>
-    {/* <div className="relative min-h-screen flex flex-col justify-center items-center bg-gray-100">
+    <div className="relative min-h-screen flex flex-col justify-center items-center bg-gray-100">
       <div className="absolute top-4 right-4">
         <SignInButton />
       </div>
@@ -28,7 +28,7 @@ export default function LandingPage() {
         </CardHeader>
       </Card>
     
-    </div> */}
+    </div>
    <ParallaxComponenet />
     </>
   );
